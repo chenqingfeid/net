@@ -4,7 +4,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 /**
- * {@link DnsResolver} is used for DNS resolving during network communication
+ * {@link DnsResolver} is used for DNS resolving to establish socket connection
  * 
  * @author johnsonlee
  *
