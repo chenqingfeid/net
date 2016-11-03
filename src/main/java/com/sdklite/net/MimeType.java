@@ -1,6 +1,5 @@
 package com.sdklite.net;
 
-import java.io.File;
 import java.io.Serializable;
 import java.nio.charset.Charset;
 import java.util.Collections;
@@ -11,9 +10,6 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import android.net.Uri;
-import android.webkit.MimeTypeMap;
 
 /**
  * Represents the MIME type as defined in <a href="https://www.ietf.org/rfc/rfc2046.txt">Multipurpose Internet Mail Extensions (MIME) Part Two : Media Types</a>
@@ -71,48 +67,6 @@ public class MimeType implements Serializable {
         }
 
         return new MimeType(type, subtype, parameters);
-    }
-
-    /**
-     * Guess the MIME type from the specified URL
-     * 
-     * @param url The URL to guess
-     * 
-     * @return an instanceof {@link MimeType} or null if the file extension has
-     *         not registered
-     */
-    public static MimeType guess(final String url) {
-        final String ext = MimeTypeMap.getFileExtensionFromUrl(url);
-        final MimeTypeMap mtm = MimeTypeMap.getSingleton();
-        if (mtm.hasExtension(ext)) {
-            return MimeType.parse(mtm.getMimeTypeFromExtension(ext));
-        }
-
-        return null;
-    }
-
-    /**
-     * Guess the MIME type from the specified file
-     * 
-     * @param file
-     *            The file to guess
-     * @return an instanceof {@link MimeType} or null if the file extension has
-     *         not registered
-     */
-    public static MimeType guess(final Uri uri) {
-        return guess(uri.toString());
-    }
-
-    /**
-     * Guess the MIME type from the specified file
-     * 
-     * @param file
-     *            The file to guess
-     * @return an instanceof {@link MimeType} or null if the file extension has
-     *         not registered
-     */
-    public static MimeType guess(final File file) {
-        return guess(Uri.fromFile(file));
     }
 
     private final String type;
