@@ -2,6 +2,8 @@ package com.sdklite.net;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * {@link DnsResolver} is used for DNS resolving to establish socket connection
@@ -16,8 +18,8 @@ public interface DnsResolver {
      */
     public static final DnsResolver SYSTEM = new DnsResolver() {
         @Override
-        public InetAddress resolve(final String hostname) throws UnknownHostException {
-            return InetAddress.getByName(hostname);
+        public List<InetAddress> resolve(final String hostname) throws UnknownHostException {
+            return Arrays.asList(InetAddress.getAllByName(hostname));
         }
     };
 
@@ -30,6 +32,6 @@ public interface DnsResolver {
      * @throws UnknownHostException
      *             if the hostname could not be resolved
      */
-    public InetAddress resolve(final String hostname) throws UnknownHostException;
+    public List<InetAddress> resolve(final String hostname) throws UnknownHostException;
 
 }

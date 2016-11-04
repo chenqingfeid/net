@@ -1,6 +1,8 @@
 package com.sdklite.net;
 
+import java.io.File;
 import java.io.Serializable;
+import java.net.URLConnection;
 import java.nio.charset.Charset;
 import java.util.Collections;
 import java.util.Comparator;
@@ -67,6 +69,31 @@ public class MimeType implements Serializable {
         }
 
         return new MimeType(type, subtype, parameters);
+    }
+
+    public static final MimeType guess(final File file) {
+        return guess(file, null);
+    }
+
+    public static final MimeType guess(final File file, final MimeType defaultType) {
+        return guess(file.getName(), defaultType);
+    }
+
+    public static final MimeType guess(final String url) {
+        return guess(url, null);
+    }
+
+    public static final MimeType guess(final String url, final MimeType defaultType) {
+        if (null == url) {
+            return defaultType;
+        }
+
+        final String contentType = URLConnection.guessContentTypeFromName(url);
+        if (null != contentType) {
+            return MimeType.parse(contentType);
+        }
+
+        return defaultType;
     }
 
     private final String type;
@@ -244,8 +271,13 @@ public class MimeType implements Serializable {
      * 
      * @return the charset
      */
-    public Charset getCharset(final String defaultCharset) {
-        return Charset.forName(getParameter("charset", defaultCharset));
+    public Charset getCharset(final Charset defaultCharset) {
+        final String charsetName = getParameter("charset");
+        if (null != charsetName) {
+            return Charset.forName(charsetName);
+        }
+
+        return defaultCharset;
     }
 
     /**
