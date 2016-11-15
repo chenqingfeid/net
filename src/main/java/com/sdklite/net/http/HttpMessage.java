@@ -73,6 +73,13 @@ public abstract class HttpMessage {
             return this;
         }
 
+        public Builder addHeaders(final Iterable<HttpHeader> headers) {
+            for (final HttpHeader header : headers) {
+                this.headers.add(header);
+            }
+            return this;
+        }
+
         public Builder addHeader(final String name, final String value) {
             return addHeaders(new SimpleHttpHeader(name, value));
         }

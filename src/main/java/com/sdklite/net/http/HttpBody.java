@@ -105,7 +105,7 @@ public abstract class HttpBody implements HttpEntity {
     }
 
     @Override
-    public long getContentLength() {
+    public long getContentLength() throws IOException {
         return -1;
     }
 

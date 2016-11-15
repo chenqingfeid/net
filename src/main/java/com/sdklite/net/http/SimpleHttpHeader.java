@@ -1,6 +1,6 @@
 package com.sdklite.net.http;
 
-class SimpleHttpHeader implements HttpHeader {
+public class SimpleHttpHeader implements HttpHeader {
 
     private final String name;
     private final String value;

@@ -33,7 +33,7 @@ public interface HttpEntity {
     /**
      * Returns the content length
      */
-    public long getContentLength();
+    public long getContentLength() throws IOException;
 
     /**
      * Write this entity into {@code out}
