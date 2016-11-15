@@ -52,14 +52,21 @@ public class MultipartBody extends HttpBody {
         this.parts = Collections.unmodifiableList(builder.parts);
     }
 
+    @Override
     public Charset getCharset() {
         return this.charset;
     }
 
+    /**
+     * Returns the boundary
+     */
     public String getBoundary() {
         return this.boundary;
     }
 
+    /**
+     * Returns the parts
+     */
     public List<Part> getParts() {
         return this.parts;
     }
@@ -108,10 +115,21 @@ public class MultipartBody extends HttpBody {
         out.write(CR_LF);
     }
 
+    /**
+     * Create a {@link Builder}
+     * 
+     * @return a builder
+     */
     public Builder newBuilder() {
         return new Builder(this);
     }
 
+    /**
+     * The builder of {@link MultipartBody}
+     * 
+     * @author johnsonlee
+     *
+     */
     public static final class Builder {
 
         private Charset charset = Charset.defaultCharset();
@@ -120,6 +138,9 @@ public class MultipartBody extends HttpBody {
 
         private final List<Part> parts = new ArrayList<Part>();
 
+        /**
+         * Default constructor
+         */
         public Builder() {
         }
 
@@ -129,49 +150,144 @@ public class MultipartBody extends HttpBody {
             this.parts.addAll(body.parts);
         }
 
+        /**
+         * Sets the charset
+         * 
+         * @param charset
+         *            The charset
+         * @return this builder
+         */
         public Builder setCharset(final Charset charset) {
             this.charset = charset;
             return this;
         }
 
+        /**
+         * Sets the boundary
+         * 
+         * @param boundary
+         *            The boundary
+         * @return this builder
+         */
         public Builder setBoundary(final String boundary) {
             this.boundary = boundary;
             return this;
         }
 
+        /**
+         * Appends the specified part into parts
+         * 
+         * @param part
+         *            A part
+         * @return this builder
+         */
         public Builder addPart(final Part part) {
             this.parts.add(part);
             return this;
         }
 
+        /**
+         * Appends the specified name and part entity into parts
+         * 
+         * @param name
+         *            The name of part
+         * @param entity
+         *            The entity of part
+         * @return this builder
+         */
         public Builder addPart(final String name, final PartEntity entity) {
             return this.addPart(new Part.Builder().setName(name).setEntity(entity).build());
         }
 
+        /**
+         * Appends the specified name and part entity into parts
+         * 
+         * @param name
+         *            The name of part
+         * @param data
+         *            The data of part entity
+         * @return this builder
+         */
         public Builder addPart(final String name, final byte[] data) {
             return this.addPart(name, new ByteArrayPartBody(data));
         }
 
+        /**
+         * Appends the specified name and part entity into parts
+         * 
+         * @param name
+         *            The name of part
+         * @param data
+         *            The data of part entity
+         * @param contentType
+         *            The content type of part entity
+         * @return this builder
+         */
         public Builder addPart(final String name, final byte[] data, final MimeType contentType) {
             return this.addPart(name, new ByteArrayPartBody(data, contentType));
         }
 
+        /**
+         * Appends the specified name and part entity into parts
+         * 
+         * @param name
+         *            The name of part
+         * @param file
+         *            The data of part entity
+         * @return this builder
+         */
         public Builder addPart(final String name, final File file) {
             return this.addPart(name, new FilePartBody(file));
         }
 
+        /**
+         * Appends the specified name and part entity into parts
+         * 
+         * @param name
+         *            The name of part
+         * @param file
+         *            The data of part entity
+         * @param contentType
+         *            The content type of part entity
+         * @return this builder
+         */
         public Builder addPart(final String name, final File file, final MimeType contentType) {
             return this.addPart(name, new FilePartBody(file, contentType));
         }
 
+        /**
+         * Appends the specified name and part entity into parts
+         * 
+         * @param name
+         *            The name of part
+         * @param text
+         *            The data of part entity
+         * @return this builder
+         */
         public Builder addPart(final String name, final String text) {
             return this.addPart(name, new StringPartBody(text));
         }
 
+        /**
+         * Appends the specified name and part entity into parts
+         * 
+         * @param name
+         *            The name of part
+         * @param text
+         *            The data of part entity
+         * @param contentType
+         *            The content type of part entity
+         * @return this builder
+         */
         public Builder addPart(final String name, final String text, final MimeType contentType) {
             return this.addPart(name, new StringPartBody(text, contentType));
         }
 
+        /**
+         * Instantialize a multipart body
+         * 
+         * @return an instance of {@link MultipartBody}
+         */
         public MultipartBody build() {
             return new MultipartBody(this);
         }
