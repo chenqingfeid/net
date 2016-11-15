@@ -9,8 +9,9 @@
     <version>0.0.3</version>
   </parent>
 
+  <groupId>com.sdklite</groupId>
   <artifactId>net</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.1</version>
 
   <name>Network Foundation</name>
   <url>http://net.sdklite.com</url>
