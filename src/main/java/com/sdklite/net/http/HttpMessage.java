@@ -38,10 +38,10 @@ public abstract class HttpMessage {
         return Collections.unmodifiableList(headers);
     }
 
-    public HttpHeader getHeader(final String name) {
+    public String getHeader(final String name) {
         for (final HttpHeader header : this.headers) {
             if (header.getName().equalsIgnoreCase(name)) {
-                return header;
+                return header.getValue();
             }
         }
 
