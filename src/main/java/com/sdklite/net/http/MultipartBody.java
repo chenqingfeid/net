@@ -150,6 +150,18 @@ public class MultipartBody extends HttpBody {
             this.parts.addAll(body.parts);
         }
 
+        public Charset getCharset() {
+            return this.charset;
+        }
+
+        public String getBoundary() {
+            return this.boundary;
+        }
+
+        public List<Part> getParts() {
+            return this.parts;
+        }
+
         /**
          * Sets the charset
          * 
@@ -281,6 +293,19 @@ public class MultipartBody extends HttpBody {
          */
         public Builder addPart(final String name, final String text, final MimeType contentType) {
             return this.addPart(name, new StringPartBody(text, contentType));
+        }
+
+        /**
+         * Appends the specified name and part entity into parts
+         * 
+         * @param name
+         *            The name of part
+         * @param value
+         *            The stream of part entity
+         * @return this builder
+         */
+        public Builder addPart(final String name, final InputStream value) {
+            return this.addPart(name, new InputStreamPartBody(value));
         }
 
         /**
